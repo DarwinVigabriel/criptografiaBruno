@@ -54,9 +54,50 @@ Esta librería implementa varios algoritmos clásicos de cifrado de sustitución
 
 ## Instalación
 
-1. Clona o descarga los archivos
-2. Instala NumPy: `pip install numpy`
-3. Ejecuta `main.py`
+### Requisitos Previos
+- **Python 3.6 o superior**
+- **pip** (gestor de paquetes de Python)
+
+### Pasos de Instalación
+
+1. **Clona o descarga el repositorio**
+   ```bash
+   git clone https://github.com/DarwinVigabriel/criptografiaBruno.git
+   cd criptografiaBruno
+   ```
+
+2. **Instala las dependencias**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   **O instala manualmente:**
+   ```bash
+   pip install numpy>=1.19.0
+   pip install customtkinter>=5.0.0
+   ```
+
+3. **Verifica la instalación**
+   ```bash
+   python -c "import numpy; import customtkinter; print('Instalación exitosa')"
+   ```
+
+4. **Ejecuta el programa**
+   ```bash
+   python main.py
+   ```
+
+### Notas de Instalación
+
+- **Windows**: Si tienes problemas con pip, usa `python -m pip install -r requirements.txt`
+- **Linux/macOS**: Puede requerir `sudo` para instalación global: `sudo pip install -r requirements.txt`
+- **Entorno virtual** (recomendado):
+  ```bash
+  python -m venv env
+  env\Scripts\activate  # Windows
+  source env/bin/activate  # Linux/macOS
+  pip install -r requirements.txt
+  ```
 
 ## Uso
 
