@@ -34,7 +34,7 @@ class CifradoSustitucionSimple:
         if alfabeto is not None and not isinstance(alfabeto, Alfabeto):
             raise TypeError("El alfabeto debe ser una instancia de la clase Alfabeto o None")
 
-        self.alfabeto = alfabeto or Alfabeto()
+        self.alfabeto = alfabeto or Alfabeto(case_sensitive=True)
 
         if clave is not None:
             clave_upper = clave.upper()

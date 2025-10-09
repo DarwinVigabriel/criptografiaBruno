@@ -29,7 +29,7 @@ class CifradoPlayfair:
         if not clave_limpia:
             raise ValueError("La clave no puede estar vacía")
 
-        self.alfabeto = alfabeto or Alfabeto()
+        self.alfabeto = alfabeto or Alfabeto(case_sensitive=True)
 
         self.clave = limpiar_texto(clave_limpia)
         if not self.clave:

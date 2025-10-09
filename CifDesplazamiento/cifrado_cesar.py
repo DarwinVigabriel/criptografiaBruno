@@ -23,7 +23,7 @@ class CifradoCesar:
         if not isinstance(desplazamiento, int):
             raise TypeError("El desplazamiento debe ser un número entero")
 
-        self.alfabeto = alfabeto or Alfabeto()
+        self.alfabeto = alfabeto or Alfabeto(case_sensitive=True)
 
         if self.alfabeto.obtener_longitud() == 0:
             raise ValueError("El alfabeto no puede estar vacío")

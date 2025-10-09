@@ -37,7 +37,7 @@ class CifradoHill:
         if len(relleno) != 1:
             raise ValueError("El carácter de relleno debe ser un solo carácter")
 
-        self.alfabeto = alfabeto or Alfabeto()
+        self.alfabeto = alfabeto or Alfabeto(case_sensitive=True)
         self.tam_grupo = tam_grupo
         self.relleno = relleno
 

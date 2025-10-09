@@ -20,7 +20,7 @@ class CifradoAtbash:
         if alfabeto is not None and not isinstance(alfabeto, Alfabeto):
             raise TypeError("El alfabeto debe ser una instancia de la clase Alfabeto")
 
-        self.alfabeto = alfabeto or Alfabeto()
+        self.alfabeto = alfabeto or Alfabeto(case_sensitive=True)
 
     def cifrar(self, texto_plano: str) -> str:
         """
