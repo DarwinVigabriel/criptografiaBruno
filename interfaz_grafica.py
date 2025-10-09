@@ -224,26 +224,28 @@ class InterfazCifrados(ctk.CTk):
         try:
             # Obtener los valores de las entradas
             args = []
-            for entrada in entradas.values():
+            for campo, entrada in entradas.items():
                 if isinstance(entrada, ctk.CTkEntry):
                     valor = entrada.get()
-                    # Convertir números si es necesario
-                    try:
-                        if valor.isdigit():
-                            valor = int(valor)
-                    except:
-                        pass
+                    # Convertir números si es necesario, pero no para campos de "clave"
+                    if campo != "clave":
+                        try:
+                            if valor.isdigit():
+                                valor = int(valor)
+                        except:
+                            pass
                     args.append(valor)
                 elif isinstance(entrada, ctk.CTkTextbox):
                     args.append(entrada.get("1.0", "end-1c"))
                 elif isinstance(entrada, ctk.CTkOptionMenu):
                     valor = entrada.get()
-                    # Convertir números si es necesario
-                    try:
-                        if valor.isdigit():
-                            valor = int(valor)
-                    except:
-                        pass
+                    # Convertir números si es necesario, pero no para campos de "metodo"
+                    if campo != "metodo":
+                        try:
+                            if valor.isdigit():
+                                valor = int(valor)
+                        except:
+                            pass
                     args.append(valor)
 
             # Ejecutar la función
