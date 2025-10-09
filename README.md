@@ -30,6 +30,7 @@ Esta librería implementa varios algoritmos clásicos de cifrado de sustitución
 
 7. **Cifrado XOR**
    - Cifrado simétrico básico con operaciones XOR
+   - Resultados en base64 para legibilidad
 
 ### Cifrados de Transposición
 

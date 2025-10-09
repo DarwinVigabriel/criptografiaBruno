@@ -186,7 +186,7 @@ class TestCifradoXOR(unittest.TestCase):
         clave = "CLAVE"
         cifrado = cifrar_xor(mensaje, clave)
         descifrado = descifrar_xor(cifrado, clave)
-        # XOR mantiene espacios y caracteres especiales
+        # XOR mantiene espacios y caracteres especiales, resultado cifrado en base64
         self.assertEqual(descifrado, mensaje)
 
 

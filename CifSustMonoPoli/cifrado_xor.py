@@ -1,6 +1,7 @@
 # cifrado_xor.py
 # Implementación del cifrado XOR simple
 
+import base64
 from utilidades import Alfabeto
 
 
@@ -52,16 +53,11 @@ class CifradoXOR:
         indice_clave = 0
 
         for c in texto_plano:
-            if self.alfabeto.contiene_caracter(c):
-                indice_texto = self.alfabeto.obtener_indice(c)
-                indice_clave_actual = ord(self.clave[indice_clave % len(self.clave)])
-                nuevo_indice = indice_texto ^ indice_clave_actual
-                # Asegurar que esté dentro del rango del alfabeto
-                nuevo_indice %= self.alfabeto.obtener_longitud()
-                resultado += self.alfabeto.obtener_caracter(nuevo_indice)
-                indice_clave += 1
-            else:
-                resultado += c  # Mantener caracteres no alfabéticos
+            # XOR con el código ASCII del carácter
+            clave_char = self.clave[indice_clave % len(self.clave)]
+            nuevo_codigo = ord(c) ^ ord(clave_char)
+            resultado += chr(nuevo_codigo)
+            indice_clave += 1
 
         return resultado
 
@@ -96,7 +92,7 @@ def cifrar_xor(texto: str, clave: str, alfabeto: Alfabeto = None) -> str:
         alfabeto: Alfabeto a utilizar
 
     Returns:
-        Texto cifrado
+        Texto cifrado codificado en base64 para legibilidad
 
     Raises:
         TypeError: Si los parámetros tienen tipos incorrectos
@@ -110,7 +106,9 @@ def cifrar_xor(texto: str, clave: str, alfabeto: Alfabeto = None) -> str:
         raise TypeError("El alfabeto debe ser una instancia de la clase Alfabeto")
 
     xor = CifradoXOR(clave, alfabeto)
-    return xor.cifrar(texto)
+    resultado_binario = xor.cifrar(texto)
+    # Codificar en base64 para legibilidad
+    return base64.b64encode(resultado_binario.encode('latin-1')).decode('ascii')
 
 
 def descifrar_xor(texto_cifrado: str, clave: str, alfabeto: Alfabeto = None) -> str:
@@ -118,7 +116,7 @@ def descifrar_xor(texto_cifrado: str, clave: str, alfabeto: Alfabeto = None) -> 
     Función de conveniencia para descifrar con XOR.
 
     Args:
-        texto_cifrado: Texto a descifrar
+        texto_cifrado: Texto a descifrar (puede estar en base64 o como string binario)
         clave: Clave para XOR
         alfabeto: Alfabeto a utilizar
 
@@ -136,21 +134,28 @@ def descifrar_xor(texto_cifrado: str, clave: str, alfabeto: Alfabeto = None) -> 
     if alfabeto is not None and not isinstance(alfabeto, Alfabeto):
         raise TypeError("El alfabeto debe ser una instancia de la clase Alfabeto")
 
+    # Intentar decodificar de base64 primero
+    try:
+        datos_binarios = base64.b64decode(texto_cifrado)
+        texto_para_descifrar = datos_binarios.decode('latin-1')
+    except:
+        # Si no es base64 válido, asumir que es string binario directo
+        texto_para_descifrar = texto_cifrado
+
     xor = CifradoXOR(clave, alfabeto)
-    return xor.descifrar(texto_cifrado)
+    return xor.descifrar(texto_para_descifrar)
 
 
 if __name__ == "__main__":
     # Ejemplo de uso
-    xor = CifradoXOR("CLAVE")
     mensaje = "HOLA MUNDO"
-    cifrado = xor.cifrar(mensaje)
-    descifrado = xor.descifrar(cifrado)
+    clave = "CLAVE"
+    cifrado = cifrar_xor(mensaje, clave)
+    descifrado = descifrar_xor(cifrado, clave)
 
     print(f"Original: {mensaje}")
-    print(f"Cifrado: {cifrado}")
+    print(f"Cifrado (base64): {cifrado}")
     print(f"Descifrado: {descifrado}")
-    print(f"Clave: {xor.clave}")
 
     # XOR es simétrico
-    print(f"\nXOR es simétrico: {xor.cifrar(cifrado) == mensaje}")
+    print(f"\nXOR es simétrico: {descifrar_xor(cifrar_xor(mensaje, clave), clave) == mensaje}")
